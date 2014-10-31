@@ -25,6 +25,11 @@ function list_user_groups() {
     		$first = false;
     	}
 
+      if (is_super_admin()) {
+        if(!$first) $res .= ', ';
+        $res .= 'admin';
+      }      
+
     endif;
 
     return $res;
