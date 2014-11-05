@@ -1,6 +1,6 @@
-    <?php
+<?php
 /**
- * Description: Kode for SIL Håndball. (http://justintadlock.com/archives/2011/02/02/creating-a-custom-functions-plugin-for-end-users)
+ * Description: Kode for SIL Håndball.
  * Author: Otto Paulsen
  * Author URI: http://yoursite.com
  * Version: 0.1.0
@@ -8,6 +8,11 @@
 
 /* Place custom code below this line. */
 
+/* Returner tekstfelt med angitt nr for angitt side */
+function getSilhTekstfelt($side_id, $nr){
+    $tekst = get_post_meta( $side_id, 'tekst_' . $nr, true );
+    return $tekst;
+}
 
 
 /* [tekstfelt tekstnavn="navn"]
@@ -16,23 +21,23 @@
    Kan ha flere på en side, bare gi dem forskjllig tekstnavn.
 */
 add_shortcode( 'tekstfelt', 'tekstfelt_func' );
-function tekstfelt_func($atts, $tag){
-    $res = "";
+function tekstfelt_func($atts){
+    $res = '';
 
-    extract(shortcode_atts(array('tekstnavn' => ''), $atts));
+    extract(shortcode_atts(array('nr' => '1'), $atts));
 
-    $tekst = get_post_meta( get_the_ID(), 'tekst_' . $tekstnavn, true );
+    $tekst = get_post_meta( get_the_ID(), 'tekst_' . $nr, true );
 
 
     if (empty($tekst)){
         if(silhUserCanEdit()) {
-            $res .= '<a href="/rediger-tekstfelt?side_id=' . get_the_ID() . '&tekstnavn=' . $tekstnavn . '">Legg inn tekst</a>';
+            $res .= '<a href="/rediger-tekstfelt?side_id=' . get_the_ID() . '&tekstnavn=' . $nr . '">Legg inn tekst</a>';
         }
     } else {
         // Tekst funnet
         $res .= $tekst;
         if(silhUserCanEdit()) {
-            $res .= '<a href="/rediger-tekstfelt?side_id=' . get_the_ID() . '&tekstnavn=' . $tekstnavn . '">Rediger tekst</a>';
+            $res .= '<br/><a href="/rediger-tekstfelt?side_id=' . get_the_ID() . '&tekstnavn=' . $nr . '">Rediger tekst</a>';
         }
     }
 

@@ -17,8 +17,8 @@
         Form id 19 - Google Skjema-ID brukes for å legge inn Google Skjema-ID på siden. Verdien lagres i variabel.
         Form id 22 - Tekstfelt. Input for brukervennlig tekstfelt. Verdien lagres i variabel.
 */
-add_action('frm_after_create_entry', 'formidableHookSaveGoogleCalendarId', 10, 2);
-function formidableHookSaveGoogleCalendarId($entry_id, $form_id){
+add_action('frm_after_create_entry', 'formidableHookSave', 10, 2);
+function formidableHookSave($entry_id, $form_id){
     if($form_id == 18){ 
         if(isset($_POST['item_meta'][171])) 
             $kalender_var = $_POST['item_meta'][171];

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: SILH Functions
  * Plugin URI: http://strindheimhandball.no
- * Description: Kode for SIL Håndball. (http://justintadlock.com/archives/2011/02/02/creating-a-custom-functions-plugin-for-end-users)
+ * Description: Kode for SIL Håndball.
  * Author: Otto Paulsen
  * Author URI: http://yoursite.com
  * Version: 0.1.0
