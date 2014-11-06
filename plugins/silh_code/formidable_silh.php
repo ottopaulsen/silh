@@ -10,7 +10,6 @@
 
 
 
-
 /*
     Hook for innsending av Formidable Forms.
         Form id 18 - Google Kalender-ID brukes for å legge inn Google Kalender-ID på siden. Verdien lagres i variabel.
@@ -47,7 +46,7 @@ function formidableHookSave($entry_id, $form_id){
             $tekstnavn = 'tekst_' . $_POST['item_meta'][190];
         if(isset($_POST['item_meta'][191]))
             $side_id = $_POST['item_meta'][191];
-        update_post_meta($side_id, $tekstnavn, $tekst);
+        update_post_meta($side_id, $tekstnavn, wpautop($tekst, true));
     }
 }
 

@@ -15,6 +15,7 @@ function getSilhTekstfelt($side_id, $nr){
 }
 
 
+
 /* [tekstfelt tekstnavn="navn"]
    Brukes for å legge inn tekst som kan redigeres fra siden.
    Lagres i sidevariabel.
@@ -28,20 +29,32 @@ function tekstfelt_func($atts){
 
     $tekst = get_post_meta( get_the_ID(), 'tekst_' . $nr, true );
 
-
     if (empty($tekst)){
         if(silhUserCanEdit()) {
             $res .= '<a href="/rediger-tekstfelt?side_id=' . get_the_ID() . '&tekstnavn=' . $nr . '">Legg inn tekst</a>';
         }
     } else {
         // Tekst funnet
-        $res .= $tekst;
         if(silhUserCanEdit()) {
-            $res .= '<br/><a href="/rediger-tekstfelt?side_id=' . get_the_ID() . '&tekstnavn=' . $nr . '">Rediger tekst</a>';
+            $res .= '<br/><p align="right"><a href="/rediger-tekstfelt?side_id=' . get_the_ID() . '&tekstnavn=' . $nr . '">Rediger tekst</a></p>';
         }
+        $res .= '<div class="tekstfelt">' . $tekst . '</div>';
     }
 
-    //update_post_meta(2751, 'otto test', 'Test: kal_id = ' . $kal_id );
+    return $res;
+}
+
+
+add_shortcode( 'get_tekstfelt', 'get_tekstfelt_func' );
+function get_tekstfelt_func($atts){
+    $res = '';
+
+    extract(shortcode_atts(array('side' => ''), $atts));
+    extract(shortcode_atts(array('nr' => '1'), $atts));
+
+    if($side){
+        $res = getSilhTekstfelt($side, $nr);
+    }
 
     return $res;
 }
