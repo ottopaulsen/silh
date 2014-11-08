@@ -15,6 +15,7 @@
         Form id 18 - Google Kalender-ID brukes for å legge inn Google Kalender-ID på siden. Verdien lagres i variabel.
         Form id 19 - Google Skjema-ID brukes for å legge inn Google Skjema-ID på siden. Verdien lagres i variabel.
         Form id 22 - Tekstfelt. Input for brukervennlig tekstfelt. Verdien lagres i variabel.
+        Form id 23 - Linker. Input for link-felt.
 */
 add_action('frm_after_create_entry', 'formidableHookSave', 10, 2);
 function formidableHookSave($entry_id, $form_id){
@@ -47,6 +48,18 @@ function formidableHookSave($entry_id, $form_id){
         if(isset($_POST['item_meta'][191]))
             $side_id = $_POST['item_meta'][191];
         update_post_meta($side_id, $tekstnavn, wpautop($tekst, true));
+    } elseif ($form_id == 23) {
+        if(isset($_POST['item_meta'][193])) 
+            $tekst = $_POST['item_meta'][193];
+        if(isset($_POST['item_meta'][194])) 
+            $url = $_POST['item_meta'][194];
+        if(isset($_POST['item_meta'][195])) 
+            $egetvindu = $_POST['item_meta'][195];
+        if(isset($_POST['item_meta'][196]))
+            $side_id = $_POST['item_meta'][196];
+        if(isset($_POST['item_meta'][199]))
+            $gruppe = $_POST['item_meta'][199];
+        leggInnLink($side_id, $gruppe, $tekst, $url, $egetvindu);
     }
 }
 

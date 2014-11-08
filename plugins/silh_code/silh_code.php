@@ -30,6 +30,7 @@ require_once dirname( __FILE__ ) .'/silh_google.php';
 require_once dirname( __FILE__ ) .'/showhide.php';
 require_once dirname( __FILE__ ) .'/beskjeder.php';
 require_once dirname( __FILE__ ) .'/tekstfelt.php';
+require_once dirname( __FILE__ ) .'/linker.php';
 require_once dirname( __FILE__ ) .'/treningstid.php';
 require_once dirname( __FILE__ ) .'/kontaktpersoner.php';
 require_once dirname( __FILE__ ) .'/nyheter.php';
