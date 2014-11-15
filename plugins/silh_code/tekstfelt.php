@@ -38,7 +38,7 @@ function tekstfelt_func($atts){
         if(silhUserCanEdit()) {
             $res .= '<br/><p align="right"><a href="/rediger-tekstfelt?side_id=' . get_the_ID() . '&tekstnavn=' . $nr . '">Rediger tekst</a></p>';
         }
-        $res .= '<div class="tekstfelt">' . $tekst . '</div>';
+        $res .= '<div class="tekstfelt">' . do_shortcode($tekst) . '</div>';
     }
 
     return $res;
