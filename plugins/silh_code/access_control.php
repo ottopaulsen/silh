@@ -10,14 +10,16 @@
 
 
    
-function silhUserCanEdit() {
+function silhUserCanEdit($page = 0) {
     $userCanWrite = FALSE; 
+
+    if ($page == 0) $page = get_the_ID();
     
     global $oUserAccessManager;
     if (isset($oUserAccessManager)) :
         $uamAccessHandler = $oUserAccessManager->getAccessHandler();
 	    $oCurrentUser = $uamAccessHandler->getUserAccessManager()->getCurrentUser();
-        $aUserGroupsForPage = $uamAccessHandler->getUserGroupsForObject('page', get_the_ID());
+        $aUserGroupsForPage = $uamAccessHandler->getUserGroupsForObject('page', $page);
         $aUserGroupsForUser = $uamAccessHandler->getUserGroupsForObject('user', $oCurrentUser->ID);
 
         foreach ($aUserGroupsForPage as $pageGroups) {

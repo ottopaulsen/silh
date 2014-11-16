@@ -29,12 +29,9 @@ function leggInnLink($side_id, $gruppe, $tekst, $url, $egetvindu){
     update_post_meta($side_id, 'linker_' . $gruppe, json_encode($linksArr));
 }
 
-function fjernLink ($side_id, $gruppe, $link_nr){
-
-}
 
 
-function byggLinkerH($linksTekst, $em){
+function byggLinkerH($linksTekst, $em, $gruppe){
     // Horisontal linje med linker (minst mulig plass i bredden)
 
     if($linksTekst){
@@ -42,34 +39,34 @@ function byggLinkerH($linksTekst, $em){
     }
     
     $res = '';
+    $link_nr = 0;
     foreach($linksArr as $linkItem){
         $res .= '<span class="linker_h_span" style="font-size:' . $em . 'em">';
         $res .= '<a class="linker linker_h"';
-        //$res .= '" style="font-size:' . $em . 'em"';
         $res .= ' href="' . $linkItem['url'] . '"' . ($linkItem['egetvindu'] ? ' target="_blank">' : '>');
         $res .=  $linkItem['tekst'];
-        //if(silhUserCanEdit()) $res .= '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
         $res .= '</a>';
         if(silhUserCanEdit()){
-            $res .= '<span class="link_red_h"><a href="flyttLinkOpp">&#9664;</a>';
-            $res .= '<a align="right" href="slettLink">&nbsp;X&nbsp;</a>';
-            $res .= '<a align="right" href="flyttLinkNed">&#9654;&nbsp</a></span>';
+            $res .= '<a align="right" href="#" onclick="move_link_up(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . ');">&#9664;</a>';
+            $res .= '<a align="right" href="#" onclick="fjern_link(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . ');">&nbsp;X&nbsp;</a>';
+            $res .= '<a align="right" href="#" onclick="move_link_down(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . ');">&#9654;&nbsp;</a>';
         }
         $res .= '</span>';
-        //  $res .= '&nbsp;&nbsp;';
+        $link_nr += 1;
     }
 
 
     return $res;
 }   
 
-function byggLinkerV($linksTekst, $em){
+function byggLinkerV($linksTekst, $em, $gruppe){
 
     if($linksTekst){
         $linksArr = json_decode($linksTekst, true);
     }
     
     $res = '';
+    $link_nr = 0;
     foreach($linksArr as $linkItem){
         $res .= '<div class="linker linker_v"';
         $res .= ' onclick="window.location=   \'' . $linkItem['url'] . '\';"';
@@ -82,13 +79,14 @@ function byggLinkerV($linksTekst, $em){
                 '</a></td>';
         if(silhUserCanEdit()){
             $res .= '<td>';
-            $res .= '<span class="link_red_v"><a href="flyttLinkOpp">&#9650;</a>';
-            $res .= '<a align="right" href="flyttLinkNed">&#9660;</a></span>';
-            $res .= '<a align="right" href="slettLink">&nbsp;X&nbsp;</a>';
+            $res .= '<a align="right" href="#" onclick="move_link_up(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . ');">&#9650;</a>';
+            $res .= '<a align="right" href="#" onclick="move_link_down(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . ');">&#9660;</a>';
+            $res .= '<a align="right" href="#" onclick="fjern_link(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . ');">&nbsp;X&nbsp;</a>';
             $res .= '</td>';
         }
         $res .= '</tr></table>';
         $res .= '</div>';
+        $link_nr += 1;
     }
 
 
@@ -116,8 +114,7 @@ function linker_func($atts){
         if(silhUserCanEdit()) {
             $res .= '<br/><p align="right"><a href="/legg-inn-link?side_id=' . get_the_ID() . '&gruppe=' . $gruppe . '">Legg til link</a></p>';
         }
-        //$res .= byggLinker3($linker, (strtolower($type) == 'h' ? 'linker_h' : 'linker_v'), $em);
-        $res .= (strtolower($type) == 'h' ? byggLinkerH($linker, $em) : byggLinkerV($linker, $em));
+        $res .= (strtolower($type) == 'h' ? byggLinkerH($linker, $em, $gruppe) : byggLinkerV($linker, $em, $gruppe));
     }
 
     return $res;
@@ -131,34 +128,81 @@ function linker_func($atts){
 function install_linker() 
 {
 
-     wp_enqueue_script( 'linker_handle', plugins_url() . '/silh_code/linker.js', array('jquery'), null);
-     wp_localize_script( 'linker_handle', 'linker_script', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+     wp_enqueue_script( 'fjern_link_handle', plugins_url() . '/silh_code/linker.js', array('jquery'), null);
+     wp_localize_script( 'fjern_link_handle', 'fjern_link_script', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+
+     wp_enqueue_script( 'move_link_up_handle', plugins_url() . '/silh_code/linker.js', array('jquery'), null);
+     wp_localize_script( 'move_link_up_handle', 'move_link_up_script', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+
+     wp_enqueue_script( 'move_link_down_handle', plugins_url() . '/silh_code/linker.js', array('jquery'), null);
+     wp_localize_script( 'move_link_down_handle', 'move_link_down_script', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 
 }
 
 
 add_action('template_redirect', 'install_linker');
 
-add_action("wp_ajax_nopriv_linker_up", "linker_up");
-add_action("wp_ajax_linker_up", "linker_up");
+add_action("wp_ajax_nopriv_fjern_link", "fjern_link");
+add_action("wp_ajax_fjern_link", "fjern_link");
 
-function linker_up()
+
+add_action("wp_ajax_nopriv_move_link_up", "move_link_up");
+add_action("wp_ajax_move_link_up", "move_link_up");
+
+add_action("wp_ajax_nopriv_move_link_down", "move_link_down");
+add_action("wp_ajax_move_link_down", "move_link_down");
+
+function fjern_link()
 {
     $page_id = $_POST['page_id'];
-    $var_name = $_POST['var_name'];
-    $default_value = $_POST['default_value'];
+    $gruppe = $_POST['gruppe'];
+    $link_nr = $_POST['link_nr'];
 
-    $vis_innhold = get_post_meta( $page_id, $var_name, true );
+    $linksTekst = get_post_meta( $page_id, 'linker_' . $gruppe, true );
 
-    if(empty($vis_innhold))
-        $vis_innhold = $default_value;
+    if (!empty($linksTekst)){
+        if(silhUserCanEdit($page_id)) {
+            $linksArr = json_decode($linksTekst, true);
+            unset($linksArr[$link_nr]);
+            update_post_meta($page_id, 'linker_' . $gruppe, json_encode($linksArr));
+        }
+    }
 
-    if(strtolower($vis_innhold) == 'ja')
-        $vis_innhold = 'nei';
-    else
-        $vis_innhold = 'ja';
 
-    update_post_meta($page_id, $var_name, $vis_innhold);
+    sleep(1000, refresh_afterwords);
+
+    die();
+}
+
+function move_link_up(){
+    move_link(-1);
+}
+
+function move_link_down(){
+    move_link(1);
+}
+
+function move_link($direction){
+
+    $page_id = $_POST['page_id'];
+    $gruppe = $_POST['gruppe'];
+    $link_nr = $_POST['link_nr'];
+
+    $linksTekst = get_post_meta( $page_id, 'linker_' . $gruppe, true );
+
+    if (!empty($linksTekst)){
+        if(silhUserCanEdit($page_id)) {
+            $linksArr = json_decode($linksTekst, true);
+            if ($link_nr + $direction < count($linksArr) and $link_nr + $direction >= 0){
+                $temp = $linksArr[$link_nr];
+                $linksArr[$link_nr] = $linksArr[$link_nr + $direction];
+                $linksArr[$link_nr + $direction] = $temp;
+            }
+            update_post_meta($page_id, 'linker_' . $gruppe, json_encode($linksArr));
+        }
+    }
+
+    sleep(1000, refresh_afterwords);
 
     die();
 }
