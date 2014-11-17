@@ -70,19 +70,16 @@ function byggLinkerV($linksTekst, $em, $gruppe){
     $link_nr = 0;
     foreach($linksArr as $linkItem){
         $res .= '<div class="linker linker_v"';
-        $res .= ' onclick="window.location=   \'' . $linkItem['url'] . '\';"';
+        $res .= ' onclick="window.open(\'' . $linkItem['url'] . '\'';
+        $res .= ($linkItem['egetvindu'] ? ', \'_blank\');"' : ', \'_self\');"'); 
         $res .= ' style="font-size:' . $em . 'em">';
         $res .= '<table><tr>';
-        $res .= '<td width="90%">' . '<a class="linker_a" href="' .
-                $linkItem['url'] . '"' . 
-                ($linkItem['egetvindu'] ? ' target="_blank">' : '>') . 
-                $linkItem['tekst'] .  
-                '</a></td>';
+        $res .= '<td width="90%">';  
+        $res .= '<a href="javascript:void(0)"> ' . $linkItem['tekst'] . '</a></td>';
         if(silhUserCanEdit()){
             $res .= '<td>';
             if($link_nr > 0) $res .= '<a align="right" href="javascript:void(0)" onclick="move_link_up(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . '); return false;">&#9650;</a>';
             if($link_nr < count($linksArr) - 1) $res .= '<a align="right" href="javascript:void(0)" onclick="move_link_down(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . '); return false;">&#9660;</a>';
-            //$res .= '<a align="right" href="#" onclick="fjern_link(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . ');">&nbsp;X&nbsp;</a>';
             $res .= '<a class="linker_v_a" align="right" href="javascript:void(0)" onclick="fjern_link(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . '); return false;">&nbsp;X&nbsp;</a>';
             $res .= '</td>';
         }
@@ -165,14 +162,12 @@ function fjern_link()
     if (!empty($linksTekst)){
         if(silhUserCanEdit($page_id)) {
             $linksArr = json_decode($linksTekst, true);
-            //unset($linksArr[$link_nr]);
             array_splice($linksArr, $link_nr, 1);
             update_post_meta($page_id, 'linker_' . $gruppe, json_encode($linksArr));
         }
     }
 
 
-    //sleep(1000, refresh_afterwords);
     refresh_afterwords();
 
     die();
@@ -207,7 +202,6 @@ function move_link($direction){
     }
 
 
-    //sleep(1000, refresh_afterwords);
     refresh_afterwords();
 
     die();
