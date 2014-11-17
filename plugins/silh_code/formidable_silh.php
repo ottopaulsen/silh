@@ -8,6 +8,35 @@
 
 /* Place custom code below this line. */
 
+add_filter('frm_redirect_url', 'return_page', 10, 2);
+function return_page($url, $form, $params){
+  if(!isset($params['action'])){
+    $params['action'] = FrmAppHelper::get_param('frm_action');
+  }
+
+  if($form->id == 23 and ($params['action'] == 'create' or $params['action'] == 'update')){ 
+    if(isset($_POST['item_meta'][196])){
+        $side_id = $_POST['item_meta'][196];
+        $url = get_page_link($side_id);
+    }
+  } elseif ($form->id == 18 and ($params['action'] == 'create' or $params['action'] == 'update')){ 
+    if(isset($_POST['item_meta'][173])){
+        $side_id = $_POST['item_meta'][173];
+        $url = get_page_link($side_id);
+    }
+  } elseif ($form->id == 19 and ($params['action'] == 'create' or $params['action'] == 'update')){ 
+    if(isset($_POST['item_meta'][177])){
+        $side_id = $_POST['item_meta'][177];
+        $url = get_page_link($side_id);
+    }
+  } elseif ($form->id == 22 and ($params['action'] == 'create' or $params['action'] == 'update')){ 
+    if(isset($_POST['item_meta'][191])){
+        $side_id = $_POST['item_meta'][191];
+        $url = get_page_link($side_id);
+    } 
+  }
+  return $url;
+}
 
 
 /*
@@ -27,6 +56,7 @@ function formidableHookSave($entry_id, $form_id){
         if(isset($_POST['item_meta'][173]))
             $side_id = $_POST['item_meta'][173];
         update_post_meta($side_id, $kalender_var, $kalender_id);
+        wp_redirect( get_page_link($side_id));
     } elseif ($form_id == 19) {
         if(isset($_POST['item_meta'][175])) 
             $skjema_var = $_POST['item_meta'][175];
@@ -40,6 +70,7 @@ function formidableHookSave($entry_id, $form_id){
             $side_id = $_POST['item_meta'][177];
         update_post_meta($side_id, $skjema_var, $skjema_id);
         update_post_meta($side_id, $skjemasvar_var, $svar_url);
+        wp_redirect( get_page_link($side_id));
     } elseif ($form_id == 22) {
         if(isset($_POST['item_meta'][188])) 
             $tekst = $_POST['item_meta'][188];
@@ -48,6 +79,7 @@ function formidableHookSave($entry_id, $form_id){
         if(isset($_POST['item_meta'][191]))
             $side_id = $_POST['item_meta'][191];
         update_post_meta($side_id, $tekstnavn, wpautop($tekst, true));
+        wp_redirect( get_page_link($side_id));
     } elseif ($form_id == 23) {
         if(isset($_POST['item_meta'][193])) 
             $tekst = $_POST['item_meta'][193];
@@ -60,6 +92,7 @@ function formidableHookSave($entry_id, $form_id){
         if(isset($_POST['item_meta'][199]))
             $gruppe = $_POST['item_meta'][199];
         leggInnLink($side_id, $gruppe, $tekst, $url, $egetvindu);
+        //wp_redirect( get_page_link($side_id), 201);
     }
 }
 

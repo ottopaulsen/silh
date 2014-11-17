@@ -17,7 +17,6 @@ function fjern_link(page_id, gruppe, link_nr)
        }
      });
 
-    //sleep(1, refresh_afterwords);
     location.reload(true);
 
     event.cancelBubble = true; if (event.stopPropagation) event.stopPropagation(); 
@@ -42,7 +41,6 @@ function move_link_up(page_id, gruppe, link_nr)
      });
 
 
-    //sleep(1, refresh_afterwords);
     location.reload(true);
 
     event.cancelBubble = true; if (event.stopPropagation) event.stopPropagation(); 
@@ -66,7 +64,6 @@ function move_link_down(page_id, gruppe, link_nr)
      });
 
 
-    //sleep(1, refresh_afterwords);
     location.reload(true);
 
     event.cancelBubble = true; if (event.stopPropagation) event.stopPropagation(); 
