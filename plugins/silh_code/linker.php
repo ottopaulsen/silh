@@ -49,7 +49,8 @@ function byggLinkerH($linksTekst, $em, $gruppe){
         if(silhUserCanEdit()){
             if($link_nr > 0) $res .= '<a align="right" href="#" onclick="move_link_up(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . ');">&#9664;</a>';
             $res .= '<a align="right" href="#" onclick="fjern_link(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . ');">&nbsp;X&nbsp;</a>';
-            if($link_nr < count($linksArr) - 1) $res .= '<a align="right" href="#" onclick="move_link_down(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . ');">&#9654;&nbsp;</a>';
+            if($link_nr < count($linksArr) - 1) $res .= '<a align="right" href="#" onclick="move_link_down(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . ');">&#9654;';
+            $res .= '&nbsp;</a>';
         }
         $res .= '</span>';
         $link_nr += 1;
@@ -79,9 +80,10 @@ function byggLinkerV($linksTekst, $em, $gruppe){
                 '</a></td>';
         if(silhUserCanEdit()){
             $res .= '<td>';
-            if($link_nr > 0) $res .= '<a align="right" href="#" onclick="move_link_up(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . ');">&#9650;</a>';
-            if($link_nr < count($linksArr) - 1) $res .= '<a align="right" href="#" onclick="move_link_down(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . ');">&#9660;</a>';
-            $res .= '<a align="right" href="#" onclick="fjern_link(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . ');">&nbsp;X&nbsp;</a>';
+            if($link_nr > 0) $res .= '<a align="right" href="javascript:void(0)" onclick="move_link_up(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . '); return false;">&#9650;</a>';
+            if($link_nr < count($linksArr) - 1) $res .= '<a align="right" href="javascript:void(0)" onclick="move_link_down(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . '); return false;">&#9660;</a>';
+            //$res .= '<a align="right" href="#" onclick="fjern_link(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . ');">&nbsp;X&nbsp;</a>';
+            $res .= '<a class="linker_v_a" align="right" href="javascript:void(0)" onclick="fjern_link(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . '); return false;">&nbsp;X&nbsp;</a>';
             $res .= '</td>';
         }
         $res .= '</tr></table>';
@@ -163,13 +165,15 @@ function fjern_link()
     if (!empty($linksTekst)){
         if(silhUserCanEdit($page_id)) {
             $linksArr = json_decode($linksTekst, true);
-            unset($linksArr[$link_nr]);
+            //unset($linksArr[$link_nr]);
+            array_splice($linksArr, $link_nr, 1);
             update_post_meta($page_id, 'linker_' . $gruppe, json_encode($linksArr));
         }
     }
 
 
-    sleep(1000, refresh_afterwords);
+    //sleep(1000, refresh_afterwords);
+    refresh_afterwords();
 
     die();
 }
@@ -201,6 +205,7 @@ function move_link($direction){
             update_post_meta($page_id, 'linker_' . $gruppe, json_encode($linksArr));
         }
     }
+
 
     //sleep(1000, refresh_afterwords);
     refresh_afterwords();
