@@ -47,9 +47,9 @@ function byggLinkerH($linksTekst, $em, $gruppe){
         $res .=  $linkItem['tekst'];
         $res .= '</a>';
         if(silhUserCanEdit()){
-            $res .= '<a align="right" href="#" onclick="move_link_up(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . ');">&#9664;</a>';
+            if($link_nr > 0) $res .= '<a align="right" href="#" onclick="move_link_up(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . ');">&#9664;</a>';
             $res .= '<a align="right" href="#" onclick="fjern_link(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . ');">&nbsp;X&nbsp;</a>';
-            $res .= '<a align="right" href="#" onclick="move_link_down(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . ');">&#9654;&nbsp;</a>';
+            if($link_nr < count($linksArr) - 1) $res .= '<a align="right" href="#" onclick="move_link_down(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . ');">&#9654;&nbsp;</a>';
         }
         $res .= '</span>';
         $link_nr += 1;
@@ -79,8 +79,8 @@ function byggLinkerV($linksTekst, $em, $gruppe){
                 '</a></td>';
         if(silhUserCanEdit()){
             $res .= '<td>';
-            $res .= '<a align="right" href="#" onclick="move_link_up(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . ');">&#9650;</a>';
-            $res .= '<a align="right" href="#" onclick="move_link_down(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . ');">&#9660;</a>';
+            if($link_nr > 0) $res .= '<a align="right" href="#" onclick="move_link_up(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . ');">&#9650;</a>';
+            if($link_nr < count($linksArr) - 1) $res .= '<a align="right" href="#" onclick="move_link_down(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . ');">&#9660;</a>';
             $res .= '<a align="right" href="#" onclick="fjern_link(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . ');">&nbsp;X&nbsp;</a>';
             $res .= '</td>';
         }
@@ -202,7 +202,8 @@ function move_link($direction){
         }
     }
 
-    sleep(1000, refresh_afterwords);
+    //sleep(1000, refresh_afterwords);
+    refresh_afterwords();
 
     die();
 }
