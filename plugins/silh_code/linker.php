@@ -110,10 +110,10 @@ function linker_func($atts){
         }
     } else {
         // Tekst funnet
-        if(silhUserCanEdit()) {
-            $res .= '<br/><p align="right"><a href="/legg-inn-link?side_id=' . get_the_ID() . '&gruppe=' . $gruppe . '">Legg til link</a></p>';
-        }
         $res .= (strtolower($type) == 'h' ? byggLinkerH($linker, $em, $gruppe) : byggLinkerV($linker, $em, $gruppe));
+        if(silhUserCanEdit()) {
+            $res .= '<p align="right"><a href="/legg-inn-link?side_id=' . get_the_ID() . '&gruppe=' . $gruppe . '">Legg til link</a></p>';
+        }
     }
 
     return $res;
