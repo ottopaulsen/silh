@@ -32,7 +32,7 @@ function registrerTreningstid_func($atts){
 
 	if ($lag_id) :
 	  if (silhUserCanEdit()) :
-	    $res = "<a href='/registrering-av-treningstid/?lag=" . $lag_id . "&tilbake=" . $_SERVER['REQUEST_URI'] . "'>Legg inn ny treningstid</a>";
+	    $res = '<p><a class="editlink" href="/registrering-av-treningstid/?lag=' . $lag_id . '&tilbake=' . $_SERVER['REQUEST_URI'] . '">Legg inn ny treningstid</a></p>';
 	  endif;
 	endif;
 

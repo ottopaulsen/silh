@@ -77,9 +77,9 @@ function showhide_func($atts, $content){
 
     if ( silhUserCanEdit() ) {
         if($show){
-            $res .= '<a href="#" onclick="toggle_showhide(&quot;' . get_the_ID() . '&quot;, &quot;' . $var . '&quot;, &quot;nei&quot;);">Skjul ' . $innhold . '</a>';
+            $res .= '<a class="editlink" href="#" onclick="toggle_showhide(&quot;' . get_the_ID() . '&quot;, &quot;' . $var . '&quot;, &quot;nei&quot;);">Skjul ' . $innhold . '</a>';
         } else {
-            $res .= 'Innholdet nedenfor er skjult for andre brukere. <a href="#" onclick="toggle_showhide(&quot;' . get_the_ID() . '&quot;, &quot;' . $var . '&quot;, &quot;nei&quot;);">Vis ' . $innhold . '</a>';
+            $res .= 'Innholdet nedenfor er skjult for andre brukere. <a class="editlink" href="#" onclick="toggle_showhide(&quot;' . get_the_ID() . '&quot;, &quot;' . $var . '&quot;, &quot;nei&quot;);">Vis ' . $innhold . '</a>';
         }
         $res .= '<hr>';
     } 

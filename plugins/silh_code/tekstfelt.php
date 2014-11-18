@@ -31,12 +31,12 @@ function tekstfelt_func($atts){
 
     if (empty($tekst)){
         if(silhUserCanEdit()) {
-            $res .= '<a href="/rediger-tekstfelt?side_id=' . get_the_ID() . '&tekstnavn=' . $nr . '">Legg inn tekst</a>';
+            $res .= '<a class="editlink" href="/rediger-tekstfelt?side_id=' . get_the_ID() . '&tekstnavn=' . $nr . '">Legg inn tekst</a>';
         }
     } else {
         // Tekst funnet
         if(silhUserCanEdit()) {
-            $res .= '<br/><p align="right"><a href="/rediger-tekstfelt?side_id=' . get_the_ID() . '&tekstnavn=' . $nr . '">Rediger tekst</a></p>';
+            $res .= '<br/><p align="right"><a class="editlink" href="/rediger-tekstfelt?side_id=' . get_the_ID() . '&tekstnavn=' . $nr . '">Rediger tekst</a></p>';
         }
         $res .= '<div class="tekstfelt">' . do_shortcode($tekst) . '</div>';
     }

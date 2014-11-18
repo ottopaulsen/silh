@@ -43,7 +43,7 @@ function leggInnKontaktperson_func($atts){
 	$res = '';
 	if ($lag_id) :
 	  if (silhUserCanEdit()) :
-	    $res = "<a href='/innmelding-av-kontaktperson/?lag=" . $lag_id . "&tilbake=" . $_SERVER['REQUEST_URI'] . "'>Legg inn ny kontaktperson</a>";
+	    $res = '<p><a class="editlink" href="/innmelding-av-kontaktperson/?lag=' . $lag_id . '&tilbake=' . $_SERVER['REQUEST_URI'] . '">Legg inn ny kontaktperson</a></p>';
 	  endif;
 	endif;
 

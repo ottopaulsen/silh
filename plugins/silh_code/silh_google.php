@@ -33,7 +33,7 @@ function googleKalender_func($atts, $tag){
 
     if (empty($kal_id)){
         if(silhUserCanEdit()) {
-            $res .= '<a href="/sett-google-kalender-id?side_id=' . get_the_ID() . '&kalender_var=' . $kalender_var . '">Legg inn Kalender-ID</a>';
+            $res .= '<a class="editlink" href="/sett-google-kalender-id?side_id=' . get_the_ID() . '&kalender_var=' . $kalender_var . '">Legg inn Kalender-ID</a>';
         }
     } else {
         // Kalender-ID funnet
@@ -46,7 +46,7 @@ function googleKalender_func($atts, $tag){
                      $kal_id. '&ctz=Europe/Oslo" height="600" width="100%" frameborder="0" scrolling="no"></iframe>';
         }
         if(silhUserCanEdit()) {
-            $res .= '<a href="/sett-google-kalender-id?side_id=' . get_the_ID() . '&kalender_var=' . $kalender_var . '">Endre Kalender-ID</a>';
+            $res .= '<a class="editlink" href="/sett-google-kalender-id?side_id=' . get_the_ID() . '&kalender_var=' . $kalender_var . '">Endre Kalender-ID</a>';
         }
     }
 
@@ -92,13 +92,13 @@ function GoogleSkjema_func($atts){
     
     if (empty($skjema_id)){
         if(silhUserCanEdit()) {
-            $res .= '<a href="/sett-google-skjema-id?side_id=' . get_the_ID() . 
+            $res .= '<a class="editlink" href="/sett-google-skjema-id?side_id=' . get_the_ID() . 
                     '&skjema_var=skjema_id&skjemasvar_var=skjemasvar_url' . 
                     '">Legg inn skjema</a>';
         }
     } else {
         if(silhUserCanEdit()) {
-            $res .= '<a href="/sett-google-skjema-id?side_id=' . get_the_ID() . 
+            $res .= '<a class="editlink" href="/sett-google-skjema-id?side_id=' . get_the_ID() . 
                     '&skjema_var=skjema_id&skjemasvar_var=skjemasvar_url&skjema_id=' . $skjema_id . '&skjemasvar_url=' . urlencode($skjemasvar_url) . 
                     '">Endre skjema</a>';
         }

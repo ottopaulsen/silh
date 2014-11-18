@@ -35,7 +35,7 @@ function legginnbeskjed_func($atts){
 
     if ($lag_id) :
       if (silhUserCanEdit()) :
-        $res = "<a href='/legg-inn-beskjed-til-laget/?lag=" . $lag_id . "&tilbake=" . $_SERVER['REQUEST_URI'] . "'>Legg inn beskjed</a>";
+        $res = '<a class="editlink" href="/legg-inn-beskjed-til-laget/?lag=' . $lag_id . '&tilbake=' . $_SERVER['REQUEST_URI'] . '">Legg inn beskjed</a>';
       endif;
     endif;
 
