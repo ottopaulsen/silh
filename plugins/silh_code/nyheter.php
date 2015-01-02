@@ -34,6 +34,7 @@ function sistenyheter_func($atts){
         $res = $res . get_the_post_thumbnail(  );
         $res = $res . '<p class="sistEndretText">Skrevet den <span class="sistEndretTid">' . get_the_date() . '</span> av <span class="sistEndretForfatter">' . get_the_author() . '</span></p>';
         $res = $res . '<p>' . get_the_excerpt() . '  <a href="' . get_the_permalink() . '"><br>Les innlegget</a></p><br>';
+        $res = $res . '<hr><br>';
     endforeach; 
     wp_reset_postdata();
 
