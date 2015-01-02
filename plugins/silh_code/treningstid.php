@@ -45,7 +45,11 @@ function treningstider_func($atts){
     	              'Lørdag'=>6,
     	              'Søndag'=>7);
 
-    $res = '<table class="silhTable">
+    $res = '';
+
+    if($lag_id) $res .= '<h3>Treningstider</h3>';
+
+    $res .= '<table class="silhTable">
             <caption style="caption-side:bottom;text-align:left;border:none;background:none;margin:0;padding:0;"></caption>
             <thead>
             <tr>
@@ -86,6 +90,13 @@ function treningstider_func($atts){
 
 
     $res .= '</tbody></table>';
+
+    if ($lag_id) :
+      if (silhUserCanEdit()) :
+        $res .= '<br/><p><a class="editlink" href="/registrering-av-treningstid/?lag=' . $lag_id . '&tilbake=' . $_SERVER['REQUEST_URI'] . '">Legg inn ny treningstid</a></p>';
+      endif;
+    endif;
+
     return $res;
 }
 
