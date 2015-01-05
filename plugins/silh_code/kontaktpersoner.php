@@ -98,7 +98,7 @@ function lagfordeling_func($atts){
     }
 
 
-    return $res;
+    return $res; 
 }
 
 
