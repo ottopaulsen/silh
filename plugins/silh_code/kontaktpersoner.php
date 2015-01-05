@@ -28,6 +28,7 @@ function kontaktpersoner_func($atts){
     if(!$lag_id) $lag_id = get_post_meta( get_the_ID(), 'lag_id', true );
 	if ( $lag_id ) :
 	  $ret = FrmProDisplaysController::get_shortcode(array('id' => 497, 'lag_id' => $lag_id));
+      $ret .= do_shortcode('<p>[Legg inn kontaktperson lag_id=' . $lag_id . ']</p><br/>');
 	else :
 	  $ret = '<h2>Kontaktpersoner</h2>';
 	  $ret .= 'Denne modulen heter "Kontaktpersoner" og skal brukes for å vise lagets kontaktpersoner.';
