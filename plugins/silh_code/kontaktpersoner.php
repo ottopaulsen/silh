@@ -24,7 +24,8 @@ function list_kontaktpersoner($lag_id, $roller){
    
 add_shortcode( 'Kontaktpersoner', 'kontaktpersoner_func' );
 function kontaktpersoner_func($atts){
-	$lag_id = get_post_meta( get_the_ID(), 'lag_id', true );
+    extract(shortcode_atts(array('lag_id' => ''), $atts));
+    if(!$lag_id) $lag_id = get_post_meta( get_the_ID(), 'lag_id', true );
 	if ( $lag_id ) :
 	  $ret = FrmProDisplaysController::get_shortcode(array('id' => 497, 'lag_id' => $lag_id));
 	else :
@@ -39,7 +40,8 @@ function kontaktpersoner_func($atts){
    
 add_shortcode( 'Legg inn kontaktperson', 'leggInnKontaktperson_func' );
 function leggInnKontaktperson_func($atts){
-	$lag_id = get_post_meta( get_the_ID(), 'lag_id', true );
+    extract(shortcode_atts(array('lag_id' => ''), $atts));
+    if(!$lag_id) $lag_id = get_post_meta( get_the_ID(), 'lag_id', true );
 	$res = '';
 	if ($lag_id) :
 	  if (silhUserCanEdit()) :
@@ -66,10 +68,7 @@ function lagfordeling_func($atts){
     $res = '' ;
     
     extract(shortcode_atts(array('lag_id' => ''), $atts));
-
-    if (empty($lag_id)) {
-        $lag_id = get_post_meta( get_the_ID(), 'lag_id', true );
-    }
+    if(!$lag_id) $lag_id = get_post_meta( get_the_ID(), 'lag_id', true );
     
     if ($lag_id){
         if ($lag_id == 'all') {

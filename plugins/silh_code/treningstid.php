@@ -13,7 +13,8 @@
 
 add_shortcode( 'RegistrerTreningstid', 'registrerTreningstid_func' );
 function registrerTreningstid_func($atts){
-	$lag_id = get_post_meta( get_the_ID(), 'lag_id', true );
+    extract(shortcode_atts(array('lag_id' => ''), $atts));
+    if(!$lag_id) $lag_id = get_post_meta( get_the_ID(), 'lag_id', true );
 	$res = '';
 
 	if ($lag_id) :
@@ -33,7 +34,8 @@ function treningstider_func($atts){
 
     global $frm_entry, $frm_entry_meta;
 
-	$lag_id = get_post_meta( get_the_ID(), 'lag_id', true );
+    extract(shortcode_atts(array('lag_id' => ''), $atts));
+    if(!$lag_id) $lag_id = get_post_meta( get_the_ID(), 'lag_id', true );
 
     $entries = $frm_entry->getAll("it.form_id=13");
 
