@@ -62,7 +62,7 @@ function loginout_func($atts){
 		$res .= "\n\n" . '<a href="' . wp_logout_url(get_permalink()) . '">Logg ut</a>';
 	} else {
 		$args = array('echo' => false,
-                  'remember' => false);
+                  'remember' => true);
 		$res .= wp_login_form( $args );
 	}
 
