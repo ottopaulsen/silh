@@ -26,7 +26,7 @@ function leggInnLink($side_id, $gruppe, $tekst, $url, $egetvindu){
 
     $linksArr[] = array('tekst'=>$tekst, 'url'=>$url, 'egetvindu'=>($egetvindu == 'Nytt vindu'));
 
-    update_post_meta($side_id, 'linker_' . $gruppe, json_encode($linksArr));
+    update_post_meta($side_id, 'linker_' . $gruppe, json_encode($linksArr, JSON_UNESCAPED_UNICODE));
 }
 
 
@@ -163,7 +163,7 @@ function fjern_link()
         if(silhUserCanEdit($page_id)) {
             $linksArr = json_decode($linksTekst, true);
             array_splice($linksArr, $link_nr, 1);
-            update_post_meta($page_id, 'linker_' . $gruppe, json_encode($linksArr));
+            update_post_meta($page_id, 'linker_' . $gruppe, json_encode($linksArr, JSON_UNESCAPED_UNICODE));
         }
     }
 
@@ -197,7 +197,7 @@ function move_link($direction){
                 $linksArr[$link_nr] = $linksArr[$link_nr + $direction];
                 $linksArr[$link_nr + $direction] = $temp;
             }
-            update_post_meta($page_id, 'linker_' . $gruppe, json_encode($linksArr));
+            update_post_meta($page_id, 'linker_' . $gruppe, json_encode($linksArr, JSON_UNESCAPED_UNICODE));
         }
     }
 
