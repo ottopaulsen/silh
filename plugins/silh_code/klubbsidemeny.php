@@ -69,6 +69,10 @@ echo('Etter: ' . count($pages)) . '            ';
         	$visispalte = $pagecount % 2 + 1;
         }
 
+        if(!$bilde){
+            $bilde = '<img width="150" height="150" src="/wp-content/uploads/2014/03/Strindheim_Idrettslag_logo.png" class="attachment-thumbnail wp-post-image" alt="Strindheim Håndball">';
+        }
+
         if($visispalte == $spalte || $spalte == 0) {
             $res .= '<div class="klubbsidemeny" onclick="window.location=	\'' . $url . '\';">';
             $res .= '<table><tr>';
