@@ -15,15 +15,33 @@ add_shortcode( 'klubbsidemeny', 'klubbsidemeny_func' );
 function klubbsidemeny_func($atts){
 
     extract(shortcode_atts(array('foreldreside' => '0'), $atts));
-    extract(shortcode_atts(array('spalte' => '1'), $atts));
+    extract(shortcode_atts(array('spalte' => '0'), $atts));
+    extract(shortcode_atts(array('sider' => ''), $atts));
 
-    $args = array (
+    $args1 = array (
                 'hierarchical' => 0,
                 'sort_column' => 'post_title',
                 'sort_order' => 'asc',
                 'parent' => $foreldreside
             );
-    $pages = get_pages($args);
+    $pages = get_pages($args1);
+
+    // Legg til sider angitt spesielt med argument "sider"
+    $pages2 = array();
+    if($sider){
+        $args2 = array (
+                'hierarchical' => 0,
+                'sort_column' => 'post_title',
+                'sort_order' => 'asc',
+                'include' => $sider
+            );
+        $pages2 = get_pages($args2);
+    }
+
+echo('Før: ' . count($pages)) . '   ';
+    $pages = array_merge($pages, $pages2);
+echo('Etter: ' . count($pages)) . '            ';
+
 
     // Sorter basert på custom field sortering
     $sort_arr = array();
@@ -51,7 +69,7 @@ function klubbsidemeny_func($atts){
         	$visispalte = $pagecount % 2 + 1;
         }
 
-        if($visispalte == $spalte) {
+        if($visispalte == $spalte || $spalte == 0) {
             $res .= '<div class="klubbsidemeny" onclick="window.location=	\'' . $url . '\';">';
             $res .= '<table><tr>';
             $res .= '<td width="30%">' . $bilde . '</td>';
