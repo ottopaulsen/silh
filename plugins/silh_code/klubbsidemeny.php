@@ -17,6 +17,7 @@ function klubbsidemeny_func($atts){
     extract(shortcode_atts(array('foreldreside' => '0'), $atts));
     extract(shortcode_atts(array('spalte' => '0'), $atts));
     extract(shortcode_atts(array('sider' => ''), $atts));
+    extract(shortcode_atts(array('beskrivelse' => 'ja'), $atts));
 
     $pages = array();
 
@@ -61,11 +62,13 @@ function klubbsidemeny_func($atts){
     $pagecount = 0;
     foreach ( $pages as $page ) {
     	$pagecount += 1;
-        $beskrivelse = get_post_meta( $page->ID, 'beskrivelse', true );
         $visispalte = get_post_meta( $page->ID, 'spalte', true );
         $direktelink = get_post_meta( $page->ID, 'direktelink', true );
         $title = $page->post_title;
         $bilde = get_the_post_thumbnail($page->ID, 'thumbnail');
+
+        if(strtolower($beskrivelse) == 'ja')
+            $beskrivelse_tekst = get_post_meta( $page->ID, 'beskrivelse', true );
 
         if($direktelink) 
             $url = $direktelink;
@@ -85,8 +88,8 @@ function klubbsidemeny_func($atts){
             $res .= '<table><tr>';
             $res .= '<td width="30%">' . $bilde . '</td>';
             $res .= '<td><h3>' . $title . '</h3>';
-            $res .= '<p>' . $beskrivelse . '</p></td>';
-            //$res .= '<a class="klubbsidemenya" href="' . $url . '"><span class="klubbsidemeny">' . $title . '</span></a>';
+            $res .= '<p>' . $beskrivelse_tekst . '</p>';
+            $res .= '</td>';
             $res .= '</tr></table>';
             $res .= '</div>';
         }
