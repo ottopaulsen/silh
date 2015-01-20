@@ -63,9 +63,14 @@ function klubbsidemeny_func($atts){
     	$pagecount += 1;
         $beskrivelse = get_post_meta( $page->ID, 'beskrivelse', true );
         $visispalte = get_post_meta( $page->ID, 'spalte', true );
+        $direktelink = get_post_meta( $page->ID, 'direktelink', true );
         $title = $page->post_title;
         $bilde = get_the_post_thumbnail($page->ID, 'thumbnail');
-        $url = get_permalink($page->ID);
+
+        if($direktelink) 
+            $url = $direktelink;
+        else 
+            $url = get_permalink($page->ID);
 
         if (empty($visispalte)){
         	$visispalte = $pagecount % 2 + 1;
