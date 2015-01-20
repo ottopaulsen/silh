@@ -18,13 +18,17 @@ function klubbsidemeny_func($atts){
     extract(shortcode_atts(array('spalte' => '0'), $atts));
     extract(shortcode_atts(array('sider' => ''), $atts));
 
-    $args1 = array (
-                'hierarchical' => 0,
-                'sort_column' => 'post_title',
-                'sort_order' => 'asc',
-                'parent' => $foreldreside
-            );
-    $pages = get_pages($args1);
+    $pages = array();
+
+    if($foreldreside){
+        $args1 = array (
+                    'hierarchical' => 0,
+                    'sort_column' => 'post_title',
+                    'sort_order' => 'asc',
+                    'parent' => $foreldreside
+                );
+        $pages = get_pages($args1);
+    }
 
     // Legg til sider angitt spesielt med argument "sider"
     $pages2 = array();
@@ -38,9 +42,7 @@ function klubbsidemeny_func($atts){
         $pages2 = get_pages($args2);
     }
 
-echo('Før: ' . count($pages)) . '   ';
     $pages = array_merge($pages, $pages2);
-echo('Etter: ' . count($pages)) . '            ';
 
 
     // Sorter basert på custom field sortering
