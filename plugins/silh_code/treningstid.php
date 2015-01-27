@@ -59,9 +59,12 @@ function treningstider_func($atts){
             <th class="column-2"><div>Sted</div></th>
             <th class="column-3"><div>Tid</div></th>';
 
-    if(!$lag_id) $res .= '<th class="column-4"><div>Lag</div></th>';
+
+    $res .= '<th class="column-4"><div>' . ($lag_id ? '' : 'Lag') . '</div></th>';
 
     $res .= '</tr></thead><tbody>';
+
+
 
     foreach ( $entries as $entry ) {
         $lag = $frm_entry_meta->get_entry_meta_by_field($entry->id, 125, true);
@@ -72,7 +75,7 @@ function treningstider_func($atts){
 
 	        $sort = $dayOrder[$dag] . $sted . $tid . $lag;
 	        $sorter[] = $sort;
-	        $tider[] = array('dag' => $dag, 'sted' => $sted, 'tid' => $tid, 'lag' => $lag);
+	        $tider[] = array('dag' => $dag, 'sted' => $sted, 'tid' => $tid, 'lag' => $lag, 'id' => $entry->id);
 	    }
     }
 
@@ -80,13 +83,30 @@ function treningstider_func($atts){
 
     $odd = true;
     foreach ($tider as $t) {
-        $res .= '<tr class="' . ($odd ? 'odd' : 'even') . '"><td>' . 
-               $t['dag'] . '</td><td>' . 
-               $t['sted'] . '</td><td>' . 
-               $t['tid'] . '</td>';
+        $res .= ' ' . 
+                '<div id="frm_del_container_' . $t['id'] . '">' .
+                '<div id="frm_edit_container_' . $t['id'] . '">' .
+                '</div></div>' .
+                '<tr class="' . ($odd ? 'odd' : 'even') . '">' . 
+                '<td>' . 
+                $t['dag'] . '</td><td>' . 
+                $t['sted'] . '</td><td>' . 
+                $t['tid'] . '</td>';
         $res .= '<td>';
         if($lag_id) {
-            $res .= FrmProEntriesController::entry_edit_link(array('id' => $entry->id, 'label' => 'Rediger'))
+            $res .= FrmProEntriesController::entry_edit_link(array('id' => $t['id'], 
+                                                                   'label' => 'Rediger', 
+                                                                   'class' => 'editlink',
+                                                                   'page_id' => 872,
+                                                                   'prefix' => 'frm_edit_container_',
+                                                                   'location' => 'front'));
+            $res .= '&nbsp;';
+            $res .= FrmProEntriesController::entry_delete_link(array('id' => $t['id'], 
+                                                                     'label' => 'Slett', 
+                                                                     'class' => 'editlink',
+                                                                     'prefix' => 'frm_del_container_',
+                                                                     'confirm' => 'Slett treningstid?',
+                                                                     'location' => 'front'));
         } else {
             $res .= $t['lag'];
         }
