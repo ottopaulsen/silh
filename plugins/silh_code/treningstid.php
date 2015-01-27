@@ -84,10 +84,13 @@ function treningstider_func($atts){
                $t['dag'] . '</td><td>' . 
                $t['sted'] . '</td><td>' . 
                $t['tid'] . '</td>';
+        $res .= '<td>';
         if($lag_id) {
+            $res .= FrmProEntriesController::entry_edit_link(array('id' => $entry->id, 'label' => 'Rediger'))
         } else {
-            $res .= '<td>' . $t['lag'] . '</td>';
+            $res .= $t['lag'];
         }
+        $res .= '</td>';
         $res .= '</tr>';
 
         $odd = !$odd;
