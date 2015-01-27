@@ -99,5 +99,9 @@ function klubbsidemeny_func($atts){
     return $res;
 }
 
+
+
+
+
 /* Place custom code above this line. */
 ?>
