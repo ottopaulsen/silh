@@ -60,7 +60,7 @@ function treningstider_func($atts){
             <th class="column-3"><div>Tid</div></th>';
 
 
-    $res .= '<th class="column-4"><div>' . ($lag_id ? '' : 'Lag') . '</div></th>';
+    if (silhUserCanEdit() || !$lag_id) $res .= '<th class="column-4"><div>' . ($lag_id ? '' : 'Lag') . '</div></th>';
 
     $res .= '</tr></thead><tbody>';
 
@@ -92,25 +92,30 @@ function treningstider_func($atts){
                 $t['dag'] . '</td><td>' . 
                 $t['sted'] . '</td><td>' . 
                 $t['tid'] . '</td>';
-        $res .= '<td>';
+
+        if (silhUserCanEdit() || !$lag_id) $res .= '<td>';
+
         if($lag_id) {
-            $res .= FrmProEntriesController::entry_edit_link(array('id' => $t['id'], 
+            if (silhUserCanEdit()) {
+                $res .= FrmProEntriesController::entry_edit_link(array('id' => $t['id'], 
                                                                    'label' => 'Rediger', 
                                                                    'class' => 'editlink',
                                                                    'page_id' => 872,
                                                                    'prefix' => 'frm_edit_container_',
                                                                    'location' => 'front'));
-            $res .= '&nbsp;';
-            $res .= FrmProEntriesController::entry_delete_link(array('id' => $t['id'], 
+                $res .= '&nbsp;';
+                $res .= FrmProEntriesController::entry_delete_link(array('id' => $t['id'], 
                                                                      'label' => 'Slett', 
                                                                      'class' => 'editlink',
                                                                      'prefix' => 'frm_del_container_',
                                                                      'confirm' => 'Slett treningstid?',
                                                                      'location' => 'front'));
+                $res .= '</td>';
+            }
         } else {
             $res .= $t['lag'];
+            $res .= '</td>';
         }
-        $res .= '</td>';
         $res .= '</tr>';
 
         $odd = !$odd;
