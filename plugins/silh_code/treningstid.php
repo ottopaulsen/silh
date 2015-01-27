@@ -84,7 +84,10 @@ function treningstider_func($atts){
                $t['dag'] . '</td><td>' . 
                $t['sted'] . '</td><td>' . 
                $t['tid'] . '</td>';
-        if(!$lag_id) $res .= '<td>' . $t['lag'] . '</td>';
+        if($lag_id) {
+        } else {
+            $res .= '<td>' . $t['lag'] . '</td>';
+        }
         $res .= '</tr>';
 
         $odd = !$odd;
