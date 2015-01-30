@@ -47,9 +47,9 @@ function byggLinkerH($linksTekst, $em, $gruppe){
         $res .=  $linkItem['tekst'];
         $res .= '</a>';
         if(silhUserCanEdit()){
-            if($link_nr > 0) $res .= '<a align="right" href="#" onclick="move_link_up(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . ');">&#9664;</a>';
-            $res .= '<a align="right" href="#" onclick="fjern_link(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . ');">&nbsp;X&nbsp;</a>';
-            if($link_nr < count($linksArr) - 1) $res .= '<a align="right" href="#" onclick="move_link_down(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . ');">&#9654;';
+            if($link_nr > 0) $res .= '<a align="right" href="#" onclick="move_link_up(' . get_the_ID() . ', \'' . $gruppe . '\', ' . $link_nr . ');">&#9664;</a>';
+            $res .= '<a align="right" href="#" onclick="fjern_link(' . get_the_ID() . ', \'' . $gruppe . '\', ' . $link_nr . ');">&nbsp;X&nbsp;</a>';
+            if($link_nr < count($linksArr) - 1) $res .= '<a align="right" href="#" onclick="move_link_down(' . get_the_ID() . ', \'' . $gruppe . '\', ' . $link_nr . ');">&#9654;';
             $res .= '&nbsp;</a>';
         }
         $res .= '</span>';
@@ -78,9 +78,9 @@ function byggLinkerV($linksTekst, $em, $gruppe){
         $res .= '<a href="javascript:void(0)"> ' . $linkItem['tekst'] . '</a></td>';
         if(silhUserCanEdit()){
             $res .= '<td>';
-            if($link_nr > 0) $res .= '<a align="right" href="javascript:void(0)" onclick="move_link_up(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . '); return false;">&#9650;</a>';
-            if($link_nr < count($linksArr) - 1) $res .= '<a align="right" href="javascript:void(0)" onclick="move_link_down(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . '); return false;">&#9660;</a>';
-            $res .= '<a class="linker_v_a" align="right" href="javascript:void(0)" onclick="fjern_link(' . get_the_ID() . ', ' . $gruppe . ', ' . $link_nr . '); return false;">&nbsp;X&nbsp;</a>';
+            if($link_nr > 0) $res .= '<a align="right" href="javascript:void(0)" onclick="move_link_up(' . get_the_ID() . ', \'' . $gruppe . '\', ' . $link_nr . '); return false;">&#9650;</a>';
+            if($link_nr < count($linksArr) - 1) $res .= '<a align="right" href="javascript:void(0)" onclick="move_link_down(' . get_the_ID() . ', \'' . trim($gruppe) . '\', ' . $link_nr . '); return false;">&#9660;</a>';
+            $res .= '<a class="linker_v_a" align="right" href="javascript:void(0)" onclick="fjern_link(' . get_the_ID() . ', \'' . $gruppe . '\', ' . $link_nr . '); return false;">&nbsp;X&nbsp;</a>';
             $res .= '</td>';
         }
         $res .= '</tr></table>';

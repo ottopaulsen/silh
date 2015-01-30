@@ -18,6 +18,7 @@ function klubbsidemeny_func($atts){
     extract(shortcode_atts(array('spalte' => '0'), $atts));
     extract(shortcode_atts(array('sider' => ''), $atts));
     extract(shortcode_atts(array('beskrivelse' => 'ja'), $atts));
+    extract(shortcode_atts(array('picsize' => '150'), $atts));
 
     $pages = array();
 
@@ -65,7 +66,17 @@ function klubbsidemeny_func($atts){
         $visispalte = get_post_meta( $page->ID, 'spalte', true );
         $direktelink = get_post_meta( $page->ID, 'direktelink', true );
         $title = $page->post_title;
-        $bilde = get_the_post_thumbnail($page->ID, 'thumbnail');
+
+        $thumb = wp_get_attachment_image_src( get_post_thumbnail_id($page->ID), 'thumbnail' );
+        $bildeUrl = $thumb['0'];
+
+        if(!$bildeUrl){
+            //$bilde = '<img width="150" height="150" src="/wp-content/uploads/2014/03/Strindheim_Idrettslag_logo.png" class="attachment-thumbnail wp-post-image" alt="Strindheim Håndball">';
+            $bildeUrl = "/wp-content/uploads/2014/03/Strindheim_Idrettslag_logo.png";
+        }
+
+        $bilde = '<img width="' . $picsize . '" height="' . $picsize . '" src="' . $bildeUrl . '" alt="Strindheim Håndball">';
+        //$bilde = get_the_post_thumbnail($page->ID, 'thumbnail');
 
         if(strtolower($beskrivelse) == 'ja')
             $beskrivelse_tekst = get_post_meta( $page->ID, 'beskrivelse', true );
@@ -79,15 +90,11 @@ function klubbsidemeny_func($atts){
         	$visispalte = $pagecount % 2 + 1;
         }
 
-        if(!$bilde){
-            $bilde = '<img width="150" height="150" src="/wp-content/uploads/2014/03/Strindheim_Idrettslag_logo.png" class="attachment-thumbnail wp-post-image" alt="Strindheim Håndball">';
-        }
-
         if($visispalte == $spalte || $spalte == 0) {
             $res .= '<div class="klubbsidemeny" onclick="window.location=	\'' . $url . '\';">';
             $res .= '<table><tr>';
-            $res .= '<td width="30%">' . $bilde . '</td>';
-            $res .= '<td><h3>' . $title . '</h3>';
+            $res .= '<td width="25%">' . $bilde . '</td>';
+            $res .= '<td class="klubbmenytitle"><h3>' . $title . '</h3>';
             $res .= '<p>' . $beskrivelse_tekst . '</p>';
             $res .= '</td>';
             $res .= '</tr></table>';
