@@ -15,46 +15,84 @@ add_shortcode( 'klubbsidemeny', 'klubbsidemeny_func' );
 function klubbsidemeny_func($atts){
 
     extract(shortcode_atts(array('foreldreside' => '0'), $atts));
+//    extract(shortcode_atts(array('foreldresidemeny' => 'nei'), $atts));
     extract(shortcode_atts(array('spalte' => '0'), $atts));
     extract(shortcode_atts(array('sider' => ''), $atts));
     extract(shortcode_atts(array('beskrivelse' => 'ja'), $atts));
+    extract(shortcode_atts(array('bilde' => 'ja'), $atts));
     extract(shortcode_atts(array('picsize' => '150'), $atts));
+    extract(shortcode_atts(array('h' => '3'), $atts));
+
+    $visBilde = ($bilde === 'ja');
+
+    $auto = ($foreldreside == 'auto');
+
+    $pageId = get_the_ID();
+
+    if ($auto){
+        // Lag meny for alle barna til foreldresiden
+        $undersidemeny = get_post_meta( $pageId, 'undersidemeny', true );
+        if($undersidemeny == 'ja'){
+            // Dette er foreldresiden
+            $foreldreside = $pageId;
+        } else {
+            $parents = get_post_ancestors($pageId);
+            if($parents){
+                $parentId = $parents[0];
+                $foreldreside = $parentId;
+            }
+
+        }
+    }
+
 
     $pages = array();
 
+    $args = array (
+        'hierarchical' => 0,
+        'sort_column' => 'post_title',
+        'sort_order' => 'asc',
+    );
+
+
     if($foreldreside){
-        $args1 = array (
-                    'hierarchical' => 0,
-                    'sort_column' => 'post_title',
-                    'sort_order' => 'asc',
-                    'parent' => $foreldreside
-                );
-        $pages = get_pages($args1);
+        $ekstra_menysider = get_post_meta($foreldreside, 'ekstra_menysider', true);
+
+        if($auto){
+            // Legg til foreldreside
+            $args['include'] = '' . $foreldreside;
+            $pages = array_merge($pages, get_pages($args));
+            unset($args['include']);  
+        }
+        // Legg til alle barn av foreldreside
+        $args['parent'] = $foreldreside;
+        $pages = array_merge($pages, get_pages($args));
+        unset($args['parent']);  
     }
 
     // Legg til sider angitt spesielt med argument "sider"
-    $pages2 = array();
     if($sider){
-        $args2 = array (
-                'hierarchical' => 0,
-                'sort_column' => 'post_title',
-                'sort_order' => 'asc',
-                'include' => $sider
-            );
-        $pages2 = get_pages($args2);
+        $args['include'] = $sider;
+        $pages = array_merge($pages, get_pages($args));
+        unset($args['include']);  
     }
 
-    $pages = array_merge($pages, $pages2);
+    // Legg til sider angitt spesielt med foreldresidens sidevariabel ekstra_menysider
+    if($ekstra_menysider){
+        $args['include'] = $ekstra_menysider;
+        $pages = array_merge($pages, get_pages($args));
+        unset($args['include']);  
+    }
 
 
     // Sorter basert på custom field sortering
     $sort_arr = array();
     foreach ( $pages as $page ) {
-    	$sortering = get_post_meta( $page->ID, 'sortering', true );
-    	if (empty($sortering)){
-    		$sortering = 50;
-    	}
-    	array_push($sort_arr, $sortering);
+        $sortering = get_post_meta( $page->ID, 'sortering', true );
+        if (empty($sortering)){
+            $sortering = 50;
+        }
+        array_push($sort_arr, $sortering);
     }
     array_multisort($sort_arr, SORT_NATURAL, $pages);    
 
@@ -62,21 +100,20 @@ function klubbsidemeny_func($atts){
     $res = '';
     $pagecount = 0;
     foreach ( $pages as $page ) {
-    	$pagecount += 1;
+        $pagecount += 1;
         $visispalte = get_post_meta( $page->ID, 'spalte', true );
         $direktelink = get_post_meta( $page->ID, 'direktelink', true );
-        $title = $page->post_title;
+        $menytekst = get_post_meta( $page->ID, 'menytekst', true );
+        $title = $menytekst ? $menytekst : $page->post_title;
 
         $thumb = wp_get_attachment_image_src( get_post_thumbnail_id($page->ID), 'thumbnail' );
         $bildeUrl = $thumb['0'];
 
         if(!$bildeUrl){
-            //$bilde = '<img width="150" height="150" src="/wp-content/uploads/2014/03/Strindheim_Idrettslag_logo.png" class="attachment-thumbnail wp-post-image" alt="Strindheim Håndball">';
             $bildeUrl = "/wp-content/uploads/2014/03/Strindheim_Idrettslag_logo.png";
         }
 
-        $bilde = '<img width="' . $picsize . '" height="' . $picsize . '" src="' . $bildeUrl . '" alt="Strindheim Håndball">';
-        //$bilde = get_the_post_thumbnail($page->ID, 'thumbnail');
+        $bilde = $visBilde ? '<img width="' . $picsize . '" height="' . $picsize . '" src="' . $bildeUrl . '" alt="Strindheim Håndball">' : '';
 
         if(strtolower($beskrivelse) == 'ja')
             $beskrivelse_tekst = get_post_meta( $page->ID, 'beskrivelse', true );
@@ -87,14 +124,14 @@ function klubbsidemeny_func($atts){
             $url = get_permalink($page->ID);
 
         if (empty($visispalte)){
-        	$visispalte = $pagecount % 2 + 1;
+            $visispalte = $pagecount % 2 + 1;
         }
 
         if($visispalte == $spalte || $spalte == 0) {
-            $res .= '<div class="klubbsidemeny" onclick="window.location=	\'' . $url . '\';">';
+            $res .= '<div class="klubbsidemeny" onclick="window.location=   \'' . $url . '\';">';
             $res .= '<table><tr>';
-            $res .= '<td width="25%">' . $bilde . '</td>';
-            $res .= '<td class="klubbmenytitle"><h3>' . $title . '</h3>';
+            $res .= $visBilde ? '<td width="25%">' . $bilde . '</td>' : '';
+            $res .= '<td class="klubbmenytitle"><h' . $h . '>' . ($visBilde ? '' : '&nbsp;') . $title . '</h' . $h . '>';
             $res .= '<p>' . $beskrivelse_tekst . '</p>';
             $res .= '</td>';
             $res .= '</tr></table>';
