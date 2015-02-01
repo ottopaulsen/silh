@@ -23,19 +23,26 @@ function klubbsidemeny_func($atts){
     extract(shortcode_atts(array('picsize' => '150'), $atts));
     extract(shortcode_atts(array('h' => '3'), $atts));
 
+    $meny = $_GET['meny'];
+
+
     $visBilde = ($bilde === 'ja');
 
     $auto = ($foreldreside == 'auto');
 
     $pageId = get_the_ID();
-
-    if ($auto){
+        
+    if($meny) {
+        // Meny gitt som query-parameter
+        $foreldreside = $meny;
+    } elseif ($auto){
         // Lag meny for alle barna til foreldresiden
         $undersidemeny = get_post_meta( $pageId, 'undersidemeny', true );
         if($undersidemeny == 'ja'){
             // Dette er foreldresiden
             $foreldreside = $pageId;
         } else {
+            // Finn sidens foreldreside
             $parents = get_post_ancestors($pageId);
             if($parents){
                 $parentId = $parents[0];
@@ -123,12 +130,16 @@ function klubbsidemeny_func($atts){
         else 
             $url = get_permalink($page->ID);
 
+        if($foreldreside) $url .= '?meny=' . $foreldreside;
+
         if (empty($visispalte)){
             $visispalte = $pagecount % 2 + 1;
         }
 
+        $currentClass = ($page->ID == $pageId) ? ' klubbmeny_current' : '';
+
         if($visispalte == $spalte || $spalte == 0) {
-            $res .= '<div class="klubbsidemeny" onclick="window.location=   \'' . $url . '\';">';
+            $res .= '<div class="klubbsidemeny' . $currentClass . '" onclick="window.location=   \'' . $url . '\';">';
             $res .= '<table><tr>';
             $res .= $visBilde ? '<td width="25%">' . $bilde . '</td>' : '';
             $res .= '<td class="klubbmenytitle"><h' . $h . '>' . ($visBilde ? '' : '&nbsp;') . $title . '</h' . $h . '>';
