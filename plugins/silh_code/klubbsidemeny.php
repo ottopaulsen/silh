@@ -15,12 +15,12 @@ add_shortcode( 'klubbsidemeny', 'klubbsidemeny_func' );
 function klubbsidemeny_func($atts){
 
     extract(shortcode_atts(array('foreldreside' => '0'), $atts));
-//    extract(shortcode_atts(array('foreldresidemeny' => 'nei'), $atts));
     extract(shortcode_atts(array('spalte' => '0'), $atts));
     extract(shortcode_atts(array('sider' => ''), $atts));
     extract(shortcode_atts(array('beskrivelse' => 'ja'), $atts));
     extract(shortcode_atts(array('bilde' => 'ja'), $atts));
     extract(shortcode_atts(array('picsize' => '150'), $atts));
+    extract(shortcode_atts(array('picwidth' => '25'), $atts));
     extract(shortcode_atts(array('h' => '3'), $atts));
 
     $meny = $_GET['meny'];
@@ -31,7 +31,25 @@ function klubbsidemeny_func($atts){
     $auto = ($foreldreside == 'auto');
 
     $pageId = get_the_ID();
-        
+       
+
+    $undersidemeny = get_post_meta( $pageId, 'undersidemeny', true );
+
+    if ($auto && $undersidemeny == 'ja')
+        $foreldreside = $pageId;
+    elseif($meny) {
+        // Meny gitt som query-parameter
+        $foreldreside = $meny;
+    } elseif ($auto){
+        // Finn sidens foreldreside
+        $parents = get_post_ancestors($pageId);
+        if($parents){
+            $parentId = $parents[0];
+            $foreldreside = $parentId;
+        }
+    }
+
+    /*  
     if($meny) {
         // Meny gitt som query-parameter
         $foreldreside = $meny;
@@ -51,6 +69,7 @@ function klubbsidemeny_func($atts){
 
         }
     }
+    */
 
 
     $pages = array();
@@ -122,8 +141,10 @@ function klubbsidemeny_func($atts){
 
         $bilde = $visBilde ? '<img width="' . $picsize . '" height="' . $picsize . '" src="' . $bildeUrl . '" alt="Strindheim Håndball">' : '';
 
-        if(strtolower($beskrivelse) == 'ja')
+        if(strtolower($beskrivelse) == 'ja') {
             $beskrivelse_tekst = get_post_meta( $page->ID, 'beskrivelse', true );
+            $extraPadding = ' style="padding-left:20px" ';
+        }
 
         if($direktelink) 
             $url = $direktelink;
@@ -137,12 +158,13 @@ function klubbsidemeny_func($atts){
         }
 
         $currentClass = ($page->ID == $pageId) ? ' klubbmeny_current' : '';
+        
 
         if($visispalte == $spalte || $spalte == 0) {
             $res .= '<div class="klubbsidemeny' . $currentClass . '" onclick="window.location=   \'' . $url . '\';">';
             $res .= '<table><tr>';
-            $res .= $visBilde ? '<td width="25%">' . $bilde . '</td>' : '';
-            $res .= '<td class="klubbmenytitle"><h' . $h . '>' . ($visBilde ? '' : '&nbsp;') . $title . '</h' . $h . '>';
+            $res .= $visBilde ? '<td width="' . $picwidth . '%"' . $extraPadding .'>' . $bilde . '</td>' : '';
+            $res .= '<td class="klubbmenytitle"' . $extraPadding . '><h' . $h . '>' . ($visBilde ? '' : '&nbsp;') . $title . '</h' . $h . '>';
             $res .= '<p>' . $beskrivelse_tekst . '</p>';
             $res .= '</td>';
             $res .= '</tr></table>';
