@@ -19,7 +19,7 @@ function klubbsidemeny_func($atts){
     extract(shortcode_atts(array('sider' => ''), $atts));
     extract(shortcode_atts(array('beskrivelse' => 'ja'), $atts));
     extract(shortcode_atts(array('bilde' => 'ja'), $atts));
-    extract(shortcode_atts(array('picsize' => '150'), $atts));
+    extract(shortcode_atts(array('picsize' => '100'), $atts));
     extract(shortcode_atts(array('picwidth' => '25'), $atts));
     extract(shortcode_atts(array('h' => '3'), $atts));
 
@@ -163,8 +163,9 @@ function klubbsidemeny_func($atts){
         if($visispalte == $spalte || $spalte == 0) {
             $res .= '<div class="klubbsidemeny' . $currentClass . '" onclick="window.location=   \'' . $url . '\';">';
             $res .= '<table><tr>';
-            $res .= $visBilde ? '<td width="' . $picwidth . '%"' . $extraPadding .'>' . $bilde . '</td>' : '';
+            $res .= $visBilde ? '<td width="' . $picwidth . '%"  align="center">' . $bilde . '</td>' : '';
             $res .= '<td class="klubbmenytitle"' . $extraPadding . '><h' . $h . '>' . ($visBilde ? '' : '&nbsp;') . $title . '</h' . $h . '>';
+            //$res .= '<td class="klubbmenytitle"><h' . $h . '>' . ($visBilde ? '' : '&nbsp;') . $title . '</h' . $h . '>';
             $res .= '<p>' . $beskrivelse_tekst . '</p>';
             $res .= '</td>';
             $res .= '</tr></table>';
