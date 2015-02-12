@@ -46,30 +46,11 @@ function klubbsidemeny_func($atts){
         if($parents){
             $parentId = $parents[0];
             $foreldreside = $parentId;
-        }
-    }
-
-    /*  
-    if($meny) {
-        // Meny gitt som query-parameter
-        $foreldreside = $meny;
-    } elseif ($auto){
-        // Lag meny for alle barna til foreldresiden
-        $undersidemeny = get_post_meta( $pageId, 'undersidemeny', true );
-        if($undersidemeny == 'ja'){
-            // Dette er foreldresiden
-            $foreldreside = $pageId;
         } else {
-            // Finn sidens foreldreside
-            $parents = get_post_ancestors($pageId);
-            if($parents){
-                $parentId = $parents[0];
-                $foreldreside = $parentId;
-            }
-
+            $foreldreside = '';
         }
     }
-    */
+
 
 
     $pages = array();
@@ -80,6 +61,7 @@ function klubbsidemeny_func($atts){
         'sort_order' => 'asc',
     );
 
+var_dump($foreldreside);
 
     if($foreldreside){
         $ekstra_menysider = get_post_meta($foreldreside, 'ekstra_menysider', true);
