@@ -61,8 +61,6 @@ function klubbsidemeny_func($atts){
         'sort_order' => 'asc',
     );
 
-var_dump($foreldreside);
-
     if($foreldreside){
         $ekstra_menysider = get_post_meta($foreldreside, 'ekstra_menysider', true);
 

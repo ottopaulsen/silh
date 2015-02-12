@@ -10,7 +10,7 @@
 
 
    
-
+/*
 add_shortcode( 'lagsidemeny1', 'lagsidemeny1_func' );
 function lagsidemeny1_func($atts){
 
@@ -38,6 +38,7 @@ function lagsidemeny1_func($atts){
 
     return $res;
 }
+*/
 
 add_shortcode( 'lagsidemeny', 'lagsidemeny_func' );
 function lagsidemeny_func($atts){
@@ -57,7 +58,8 @@ function lagsidemeny_func($atts){
         $lag_id = get_post_meta( $page->ID, 'lag_id', true );
         $title = $page->post_title;
         $url = get_permalink($page->ID);
-        $res .= '<a class="undersidemenya" href="' . $url . '"><span class="undersidemeny">' . $title . '</span></a>';
+        //$res .= '<a class="undersidemenya" href="' . $url . '"><span class="undersidemeny">' . $title . '</span></a>';
+        $res .= '<a href="' . $url . '"><span class="undersidemeny">' . $title . '</span></a>';
     }
     $res .= '';
 
