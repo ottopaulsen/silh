@@ -21,6 +21,7 @@ function klubbsidemeny_func($atts){
     extract(shortcode_atts(array('bilde' => 'ja'), $atts));
     extract(shortcode_atts(array('picsize' => '100'), $atts));
     extract(shortcode_atts(array('picwidth' => '25'), $atts));
+    extract(shortcode_atts(array('visurlmeny' => 'ja'), $atts));
     extract(shortcode_atts(array('h' => '3'), $atts));
 
     $meny = $_GET['meny'];
@@ -37,7 +38,7 @@ function klubbsidemeny_func($atts){
 
     if ($auto && $undersidemeny == 'ja')
         $foreldreside = $pageId;
-    elseif($meny) {
+    elseif($meny && $visurlmeny == 'ja') {
         // Meny gitt som query-parameter
         $foreldreside = $meny;
     } elseif ($auto){
