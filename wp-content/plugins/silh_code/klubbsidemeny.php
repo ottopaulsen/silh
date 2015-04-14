@@ -1,9 +1,9 @@
     <?php
 /**
- * Description: Kode for SIL Håndball. 
+ * Description: Kode for menyene.
  * Author: Otto Paulsen
  * 
- * Version: 0.1.0
+ * Version: 1
  */
 
 /* Place custom code below this line. */
@@ -14,28 +14,29 @@
 add_shortcode( 'klubbsidemeny', 'klubbsidemeny_func' );
 function klubbsidemeny_func($atts){
 
-    extract(shortcode_atts(array('foreldreside' => '0'), $atts));
-    extract(shortcode_atts(array('spalte' => '0'), $atts));
-    extract(shortcode_atts(array('sider' => ''), $atts));
-    extract(shortcode_atts(array('beskrivelse' => 'ja'), $atts));
-    extract(shortcode_atts(array('bilde' => 'ja'), $atts));
-    extract(shortcode_atts(array('picsize' => '100'), $atts));
-    extract(shortcode_atts(array('picwidth' => '25'), $atts));
-    extract(shortcode_atts(array('visurlmeny' => 'ja'), $atts));
-    extract(shortcode_atts(array('h' => '3'), $atts));
+    extract(shortcode_atts(array('foreldreside' => '0'), $atts)); // Vis alle undersiden til denne
+    extract(shortcode_atts(array('spalte' => '0'), $atts)); // Vis denne siden i angitt spalte
+    extract(shortcode_atts(array('sider' => ''), $atts)); // Vis disse sidene i tillegg
+    extract(shortcode_atts(array('beskrivelse' => 'ja'), $atts)); // Vis (ja) eller ikke vis (nei) beskrivelsestekst i menyen
+    extract(shortcode_atts(array('bilde' => 'ja'), $atts)); // Vis eller ikke vis bilde i menyen
+    extract(shortcode_atts(array('picsize' => '100'), $atts)); // Bilde størrelse i px
+    extract(shortcode_atts(array('picwidth' => '25'), $atts)); // Prosent bredde på kolonnen som har bildene
+    extract(shortcode_atts(array('visurlmeny' => 'ja'), $atts)); // Vis meny som angitt i URL (Sett nei for å skjule)
+    extract(shortcode_atts(array('h' => '3'), $atts)); // Skriftstørrelse. Bruker angitt "h" tag
 
-    $meny = $_GET['meny'];
+    $meny = $_GET['meny']; // Meny angitt i URL for å få med meny på alle undersider
 
 
     $visBilde = ($bilde === 'ja');
 
-    $auto = ($foreldreside == 'auto');
+    $auto = ($foreldreside == 'auto'); // Hvis auto vises meny på foreldreside og alle undersider (sidebar)
 
     $pageId = get_the_ID();
        
 
-    $undersidemeny = get_post_meta( $pageId, 'undersidemeny', true );
+    $undersidemeny = get_post_meta( $pageId, 'undersidemeny', true ); // Sidevariabel settes til ja på foreldreside for å få meny for undersider
 
+    // Denne logikken er litt for komplisert...
     if ($auto && $undersidemeny == 'ja')
         $foreldreside = $pageId;
     elseif($meny && $visurlmeny == 'ja') {
@@ -63,7 +64,7 @@ function klubbsidemeny_func($atts){
     );
 
     if($foreldreside){
-        $ekstra_menysider = get_post_meta($foreldreside, 'ekstra_menysider', true);
+        $ekstra_menysider = get_post_meta($foreldreside, 'ekstra_menysider', true); // Får å få andre sider med i menyen enn de som allerede er undersider
 
         if($auto){
             // Legg til foreldreside
@@ -109,15 +110,15 @@ function klubbsidemeny_func($atts){
     foreach ( $pages as $page ) {
         $pagecount += 1;
         $visispalte = get_post_meta( $page->ID, 'spalte', true );
-        $direktelink = get_post_meta( $page->ID, 'direktelink', true );
-        $menytekst = get_post_meta( $page->ID, 'menytekst', true );
+        $direktelink = get_post_meta( $page->ID, 'direktelink', true ); // Brukes på dummy-sider for å få direkteloin i menyen, f.eks. til arrangement cup
+        $menytekst = get_post_meta( $page->ID, 'menytekst', true ); // Overstyr tittel i menyen hvis overskrifta er for lang
         $title = $menytekst ? $menytekst : $page->post_title;
 
         $thumb = wp_get_attachment_image_src( get_post_thumbnail_id($page->ID), 'thumbnail' );
         $bildeUrl = $thumb['0'];
 
         if(!$bildeUrl){
-            $bildeUrl = "/wp-content/uploads/2014/03/Strindheim_Idrettslag_logo.png";
+            $bildeUrl = "/wp-content/uploads/2014/03/Strindheim_Idrettslag_logo.png"; // Default
         }
 
         $bilde = $visBilde ? '<img width="' . $picsize . '" height="' . $picsize . '" src="' . $bildeUrl . '" alt="Strindheim Håndball">' : '';
@@ -146,7 +147,6 @@ function klubbsidemeny_func($atts){
             $res .= '<table><tr>';
             $res .= $visBilde ? '<td width="' . $picwidth . '%"  align="center">' . $bilde . '</td>' : '';
             $res .= '<td class="klubbmenytitle"' . $extraPadding . '><h' . $h . '>' . ($visBilde ? '' : '&nbsp;') . $title . '</h' . $h . '>';
-            //$res .= '<td class="klubbmenytitle"><h' . $h . '>' . ($visBilde ? '' : '&nbsp;') . $title . '</h' . $h . '>';
             $res .= '<p>' . $beskrivelse_tekst . '</p>';
             $res .= '</td>';
             $res .= '</tr></table>';

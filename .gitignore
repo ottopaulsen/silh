@@ -1,1 +1,16 @@
 .DS_Store
+
+# Exclude everything:
+/*
+
+# Except the silh_code plugin:
+!/wp-content
+/wp-content/*
+!/wp-content/plugins
+/wp-content/plugins/*
+!/wp-content/plugins/silh_code
+
+# And except the silh theme:
+!/themes
+/themes/*
+!/themes/silh
