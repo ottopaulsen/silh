@@ -1,0 +1,1 @@
+ssh -i ~/.ssh/AWSkey.pem ubuntu@ec2-54-77-65-118.eu-west-1.compute.amazonaws.com
