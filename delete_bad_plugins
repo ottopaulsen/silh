@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Delete plugins that fucks it up, and are not needed in QA
+
+for f in ( dirtysuds-embed-pdf duplicator lockdown-wp-admin media-manager-plus 
+threewp-activity-monitor) do
+sudo echo $f
+done

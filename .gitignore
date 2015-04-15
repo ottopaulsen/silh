@@ -18,4 +18,6 @@
 # Include these too:
 !/aws
 !/.gitignore
+!/delete_bad_plugins
+!/download_duplicate
 
