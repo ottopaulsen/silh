@@ -1,0 +1,365 @@
+/*
+Theme Name: SILH
+Version: 1.0
+Description: A child theme of Divi
+Author: Husdesign.no
+Author URI: http://www.husdesign.no
+Template: Divi
+*/
+
+@import url("../Divi/style.css");
+
+#main-header{
+  height: 30px;
+  padding: 10px 0 0 0 !important;
+  min-height: 30px !important;
+}
+
+#main-header nav#top-menu-nav{
+  padding-top: 4px;
+}
+
+#top-menu-nav{
+  _height: 40px;
+}
+nav#top-menu-nav{
+  _height: 30px;
+}
+ul#top-menu.nav {
+  height: 20px;
+}
+
+#top-menu {
+  _height: 30px;
+}
+
+#top-menu > li > a {
+  _height: 30 px;
+  padding-bottom: 2px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#top-menu a:hover {
+  color: #ffe100 !important;
+  _font-weight: 700;
+  padding-bottom: 2px !important;
+  background-color: #004889;
+}
+
+.menu a:hover
+{
+  background-color: #E8F3BB;
+  font-weight: 700;
+}
+
+.menu li.current-menu-item > a
+{
+   font-weight: 700;
+}
+
+
+
+
+.menu li:first-child
+{
+   font-size: 1.35em;
+   padding-bottom: 5px;
+   text-decoration: underline;
+}
+
+/* Table description */
+.silhTable-table-description {
+	clear: both;
+	display: block;
+}
+
+.silhTable {
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 100%;
+	margin-bottom: 1em;
+	border: none;
+}
+
+
+
+.silhTable th,
+.silhTable td {
+	padding: 8px;
+	border: none;
+	background: none;
+	text-align: left;
+}
+
+.silhTable th:empty,
+.silhTable td:empty {
+	padding: 0px;
+}
+
+.silhTable tbody td {
+	vertical-align: top;
+}
+
+/* Fix right column float in many themes */
+.silhTable [class*="column"]+[class*="column"]:last-child {
+	float: none;
+}
+
+/* Vertical lines / borders */
+.silhTable tbody td,
+.silhTable tfoot th {
+	border-top: 1px solid #dddddd;
+}
+.silhTable tbody tr:first-child td {
+	border-top: 0;
+}
+.silhTable thead th {
+	border-bottom: 1px solid #dddddd;
+}
+
+/* Row background colors */
+.silhTable thead th,
+.silhTable tfoot th {
+	background-color: #d9edf7;
+	font-weight: bold;
+	vertical-align: middle;
+}
+.silhTable .odd td {
+	background-color: #ffffff;
+}
+.silhTable .even td {
+	background-color: #f9f9f9;
+}
+.silhTable .row-hover tr:hover td {
+	background-color: #f3f3f3;
+}
+
+/* Reset image layout in tables */
+.silhTable img {
+	margin: 0;
+	padding: 0;
+	border: none;
+	max-width: none;
+}
+
+/* SILH Tabell for lagets kontaktpersoner på kontaktside */
+.silhLagetsKontaktpersonerTable, .silhLagetsKontaktpersonerTable tr td {
+	border: 0px;
+	line-height: 1em;
+}
+.silhLagetsKontaktpersonerTable > tbody {
+    display:block;
+    border: 0px none black;
+    margin: 0px 0px 0px 0px;
+    table-layout: fixed;
+}
+
+/* Vet ikke helt hvorfor denne ikke påvirker andre tabeøller, men den tar bort border og markin på silhLagetsKontaktpersonerTable */
+.entry-content table { 
+    color: #000; 
+    border: 0px none black;
+    margin: 0px 0px 0px 0px;
+}
+
+
+/* Undersidemenyer (f.eks. lagsidemeny */
+.undersidemeny {
+    color: #0068a9;
+    background-color: #E8F3FB;
+    display: block;
+    padding-top: 10px;
+    padding-right: 5px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    margin-top: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    font-weight: 600;
+    font-size: 1.5em;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #AAAAAA;
+    border-radius: 5px;
+}
+
+
+.undersidemeny:hover{
+   background-color:#ffe100;
+}
+
+.klubbsidemeny {
+    cursor:pointer;
+    background-color: #E8F3FB;
+    display: block;
+    padding-top: 2px;
+    padding-right: 2px;
+    padding-bottom: 2px;
+    padding-left: 2px;
+    margin-top: 3px;
+    margin-right: 5px;
+    margin-bottom: 3px;
+    margin-left: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #AAAAAA;
+    border-radius: 5px;
+}
+
+.klubbsidemeny:hover{
+   _background-color:#d8e3FF;
+   background-color:#ffe100;
+}
+
+.klubbsidemeny, .klubbsidemeny tr td {
+	line-height: 1em;
+}
+
+.klubbmenytitle{
+    padding-left: 1px !important;
+}
+
+.klubbmenytitle h1, .klubbmenytitle h2, .klubbmenytitle h3{
+    padding-bottom: 8px;
+}
+
+.klubbmenytitle h4,.klubbmenytitle  h5, .klubbmenytitle h6{
+    padding-bottom: 2px;
+}
+
+.klubbmeny_current{
+    border-width: 2px;
+    border-color: #006889;
+    background-color:#ffe100;
+    _background-color:#d8e3FF;
+}
+
+
+.klubbsidemeny tr td {
+   border-top: 0px solid #eee;
+   padding: 6px 6px;
+}
+
+#footer-bottom {
+    display: none;
+}
+
+
+.breadcrumbs{
+    font-size: 1.1em;
+    color: #0591c4;
+    textcolor: #ffe100;
+    margin: 20px 0 0 120px;
+    position: relative;
+    float: left; 
+} 
+
+.lagsideFooter {
+    font-size: 0.8em;   
+}
+
+.breadcrumbs a:hover {
+    color: #7EBEC5;
+}
+
+._tekstfelt p {
+    font-size: 1.1em;
+    line-height: 120%;
+}
+
+
+.linker, .linker table {
+    font-weight: 600;
+    border-radius: 5px;
+    color: #0068a9;
+}
+
+
+.linker_v {
+    cursor:pointer;
+    display: block;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #AAAAAA;
+    border-radius: 5px;
+    background-color: #E8F3FB;
+    margin-top: 3px;
+    margin-right: 5px;
+    margin-bottom: 3px;
+    margin-left: 5px;}
+
+
+/*.linker_v > table > tbody > tr > td {*/
+
+.linker_v tr td {
+    padding: 3px 10px;
+}
+
+.linker_h {
+    padding-top: 3px;
+    padding-right: 8px;
+    padding-bottom: 3px;
+    padding-left: 8px;
+}
+
+.linker_h_span {
+    background-color: #E8F3FB;
+    border-radius: 5px;
+    border-color: #AAAAAA;
+    border-width: 1px;
+    border-style: solid;
+    margin-top: 3px;
+    margin-right: 5px;
+    margin-bottom: 3px;
+    margin-left: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    display: inline-block;
+}
+
+
+a.linker_a{
+}
+
+a.linker_a:hover, .linker_h:hover, .linker_v:hover{
+    background-color: #ffe100;
+}
+
+.editlink{
+    cursor:pointer;
+    background-color: #FFAD33;
+    color: #0068a9;
+    padding-top: 1px;
+    padding-right: 5px;
+    padding-bottom: 1px;
+    padding-left: 5px;
+    margin-top: 10px;
+    margin-right: 0px;
+    margin-bottom: 10px;
+    margin-left: 0px;
+    border-radius: 8px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #0068a9;
+}
+
+.editlink:hover{
+   background-color:#ffe100;
+}
+
+.et_pb_widget {
+    margin-right: 0px !important;
+}
+
+.et_pb_widget_area_left {
+    border-right: 0px !important;
+}
+
+.otto_test {
+    background-color:#990000;
+}
+
+
+
+/* #ffe100 #0068a9 */
