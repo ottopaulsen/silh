@@ -2,7 +2,8 @@
 
 # Delete plugins that fucks it up, and are not needed in QA
 
-for f in ( dirtysuds-embed-pdf duplicator lockdown-wp-admin media-manager-plus 
-threewp-activity-monitor) do
-sudo echo $f
+for f in  dirtysuds-embed-pdf lockdown-wp-admin uber-media
+do
+echo "Deleting wp-content/plugins/$f"
+rm -R wp-content/plugins/$f
 done

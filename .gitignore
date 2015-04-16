@@ -11,9 +11,9 @@
 !/wp-content/plugins/silh_code
 
 # And except the silh theme:
-!/themes
-/themes/*
-!/themes/silh
+!/wp-content/themes
+/wp-content/themes/*
+!/wp-content/themes/silh
 
 # Include these too:
 !/aws
