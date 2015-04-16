@@ -9,10 +9,48 @@ Template: Divi
 
 @import url("../Divi/style.css");
 
+#main-header{
+  height: 30px;
+  padding: 10px 0 0 0 !important;
+  min-height: 30px !important;
+}
+
+#main-header nav#top-menu-nav{
+  padding-top: 4px;
+}
+
+#top-menu-nav{
+  _height: 40px;
+}
+nav#top-menu-nav{
+  _height: 30px;
+}
+ul#top-menu.nav {
+  height: 20px;
+}
+
+#top-menu {
+  _height: 30px;
+}
+
+#top-menu > li > a {
+  _height: 30 px;
+  padding-bottom: 2px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#top-menu a:hover {
+  color: #ffe100 !important;
+  _font-weight: 700;
+  padding-bottom: 2px !important;
+  background-color: #004889;
+}
+
 .menu a:hover
 {
-  background-color: #E8F3FF;
-  color: #0079A5;
+  background-color: #E8F3BB;
+  font-weight: 700;
 }
 
 .menu li.current-menu-item > a
