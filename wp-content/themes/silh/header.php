@@ -126,7 +126,7 @@
 				<a href="<?php echo esc_url( home_url( '/' ) ); ?>">
 					<img src="<?php echo esc_attr( $logo ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" id="logo" />
 				</a>
-<div class="container clearfix">
+<div class="container ">
 
 				<div id="et-top-navigation">
 					<nav id="top-menu-nav">
