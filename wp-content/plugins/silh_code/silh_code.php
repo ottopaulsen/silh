@@ -37,6 +37,7 @@ require_once dirname( __FILE__ ) .'/nyheter.php';
 require_once dirname( __FILE__ ) .'/formidable_silh.php';
 require_once dirname( __FILE__ ) .'/lagsidemeny.php';
 require_once dirname( __FILE__ ) .'/klubbsidemeny.php';
+require_once dirname( __FILE__ ) .'/topmenu.php';
 
 
 //[sidebar_klubbside]
