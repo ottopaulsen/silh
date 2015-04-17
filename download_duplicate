@@ -1,3 +1,6 @@
 #!/bin/sh
-# sudo rm SILH_Kopi_av_prod* installer.php
-sudo sftp silhnxwi@cpanel12.proisp.no:/home/silhnxwi/public_html/wp-snapshots/SILH_Kopi_av_prod_*.php installer.php
+echo Deleting old installer
+rm SILH_Kopi_av_prod* installer.php
+echo Downloading new installer
+sftp silhnxwi@cpanel12.proisp.no:/home/silhnxwi/public_html/wp-snapshots/SILH_Kopi_av_prod_*.php installer.php
+sftp silhnxwi@cpanel12.proisp.no:/home/silhnxwi/public_html/wp-snapshots/SILH_Kopi_av_prod_*.zip . 
