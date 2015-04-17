@@ -9,6 +9,12 @@ Template: Divi
 
 @import url("../Divi/style.css");
 
+
+media="all"
+.et_fixed_nav #page-container {
+  padding-top: 38px;
+}
+
 #main-header{
   height: 30px;
   padding: 10px 0 0 0 !important;
