@@ -180,12 +180,7 @@
 					<?php do_action( 'et_header_top' ); ?>
 				</div> <!-- #et-top-navigation -->
 			</div> <!-- .container -->
-<div class="breadcrumbs">
-    <?php if(function_exists('bcn_display') && !is_front_page())
-    {
-        bcn_display();
-    }?>
-</div>
+
 </div>
 
 		</header> <!-- #main-header -->
