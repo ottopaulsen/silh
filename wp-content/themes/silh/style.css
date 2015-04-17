@@ -35,32 +35,33 @@ ul#top-menu.nav {
 }
 
 #top-menu {
-  _height: 30px;
+  letter-spacing: -4px;
 }
 
 #top-menu > li > a {
-  _height: 30 px;
-  padding-bottom: 2px;
-  padding-left: 4px;
-  padding-right: 4px;
+   padding-bottom: 2px;
+   padding-left: 15px;
+   padding-right: 15px;
+   border-color: #ffe100;
+   border-width: 1px;
+   border-bottom-width: 0px;
+   border-style: solid;
+   border-top-left-radius: 6px;
+   border-top-right-radius: 6px;
+   letter-spacing: normal;
 }
 
 #top-menu a:hover {
-  color: #ffe100 !important;
-  _font-weight: 700;
-  padding-bottom: 2px !important;
-  background-color: #004889;
+   border-top-width: 2px;
 }
 
-.menu a:hover
-{
-  background-color: #E8F3BB;
-  font-weight: 700;
-}
-
-.menu li.current-menu-item > a
-{
+#top-menu li.current-menu-item > a, #top-menu li.current-page-ancestor > a {
    font-weight: 700;
+   border-top-width: 2px;
+}
+
+#top-menu li, .fullwidth-menu li {
+  padding-right: 0px;
 }
 
 .menu li:first-child
