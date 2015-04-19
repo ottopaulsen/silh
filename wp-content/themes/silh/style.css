@@ -13,9 +13,11 @@ Template: Divi
   padding-bottom: 2px;
 }
 
-#forside_section .et_pb_row {
+#forside_section .et_pb_row:first-child {
     padding: 0px;
+    width: 1120px;
 }
+
 
 .et_fixed_nav #page-container {
   padding-top: 38px;
