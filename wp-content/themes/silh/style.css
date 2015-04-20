@@ -22,11 +22,16 @@ Lys blå:  #E8F3FB
   padding-bottom: 2px;
 }
 
-#forside_section .et_pb_row:first-child {
+@media only screen and (min-width: 1120px){
+  #forside_section .et_pb_row:first-child {
     padding: 0px;
     width: 1120px;
+  }
 }
 
+#forsidebanner {
+   margin-bottom: -5px;
+}
 
 .et_fixed_nav #page-container {
   padding-top: 38px;
