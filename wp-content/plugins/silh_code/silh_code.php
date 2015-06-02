@@ -1,12 +1,15 @@
 <?php
 /**
- * Plugin Name: SILH Functions
- * Plugin URI: http://strindheimhandball.no
+ * Plugin Name: SILH Code
+ * Plugin URI: https://github.com/ottopaulsen/silh-code
  * Description: Kode for SIL Håndball.
  * Author: Otto Paulsen
  * Author URI: http://yoursite.com
- * Version: 0.1.0
+ * GitHub Plugin URI: https://github.com/ottopaulsen/silh-code
+ * GitHub Branch:     master
+ * Version: 2.0.0
  */
+
 
 /* Place custom code below this line. */
 
@@ -24,20 +27,20 @@
    Date:   21.04.2014
 */
 
-require_once dirname( __FILE__ ) .'/access_control.php';
-require_once dirname( __FILE__ ) .'/loginout.php';
-require_once dirname( __FILE__ ) .'/silh_google.php';
-require_once dirname( __FILE__ ) .'/showhide.php';
-require_once dirname( __FILE__ ) .'/beskjeder.php';
-require_once dirname( __FILE__ ) .'/tekstfelt.php';
-require_once dirname( __FILE__ ) .'/linker.php';
-require_once dirname( __FILE__ ) .'/treningstid.php';
-require_once dirname( __FILE__ ) .'/kontaktpersoner.php';
-require_once dirname( __FILE__ ) .'/nyheter.php';
-require_once dirname( __FILE__ ) .'/formidable_silh.php';
-require_once dirname( __FILE__ ) .'/lagsidemeny.php';
-require_once dirname( __FILE__ ) .'/klubbsidemeny.php';
-require_once dirname( __FILE__ ) .'/topmenu.php';
+require_once dirname( __FILE__ ) .'/php/access_control.php';
+require_once dirname( __FILE__ ) .'/php/loginout.php';
+require_once dirname( __FILE__ ) .'/php/silh_google.php';
+require_once dirname( __FILE__ ) .'/php/showhide.php';
+require_once dirname( __FILE__ ) .'/php/beskjeder.php';
+require_once dirname( __FILE__ ) .'/php/tekstfelt.php';
+require_once dirname( __FILE__ ) .'/php/linker.php';
+require_once dirname( __FILE__ ) .'/php/treningstid.php';
+require_once dirname( __FILE__ ) .'/php/kontaktpersoner.php';
+require_once dirname( __FILE__ ) .'/php/nyheter.php';
+require_once dirname( __FILE__ ) .'/php/formidable_silh.php';
+require_once dirname( __FILE__ ) .'/php/lagsidemeny.php';
+require_once dirname( __FILE__ ) .'/php/klubbsidemeny.php';
+require_once dirname( __FILE__ ) .'/php/topmenu.php';
 
 
 //[sidebar_klubbside]
